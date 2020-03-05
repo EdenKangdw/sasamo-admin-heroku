@@ -51,9 +51,9 @@
   <div class="vs-con-table">
   <vs-row vs-type="flex" vs-justify="end">
     <vs-col class="arrangeForm2" vs-justify="center" vs-w="12" vs-align="center" vs-lg="3" vs-xs="3" vs-sm="3">
-      <vs-input label="배정할 팀 번호" :color="color" v-model="tm_number"/>
+      <vs-input label="배정할 팀 번호를 입력해주세요" :color="color" v-model="tm_number"/>
     </vs-col>
-    <vs-col vs-justify="center" vs-w="12" vs-align="center" vs-lg="6" vs-xs="12" vs-sm="8">
+    <vs-col vs-justify="center" vs-w="12" vs-align="center" vs-lg="6" vs-xs="12" vs-sm="6">
       <div class="button-container">
          <vs-button class="button-form" :color="color" type="filled" @click="arrangeTeams">팀 등록하기</vs-button>
       </div>
@@ -172,6 +172,7 @@ data:()=>({
     isTrue : true,
     users:[],
     color: '#e95ea2',
+    tm_number: '',
     selectedColor : ['primary', '#e95ea2', 'success', 'danger', 'warning', 'dark', '#B035E9'],
     
     

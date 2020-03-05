@@ -197,7 +197,7 @@ methods:{
     let checkData = tr.chk_isCheck ? 'y' : 'n'
     console.log('data --------', applyData, checkData)
 
-    this.$http.post('/api/admin/user/update/check', {
+    this.$http.post('/api/user/update/check', {
       ssm_seq : tr.ssm_seq,
       chk_isApply : applyData,
       chk_isCheck : checkData
