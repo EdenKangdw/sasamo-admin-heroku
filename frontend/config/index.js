@@ -1,8 +1,8 @@
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
-const apiURL_local = 'http://localhost:3000/api/admin'
-const apiURL_heroku = 'https://sasamo-server.herokuapp.com/api/admin'
+const apiURL_local = 'http://localhost:3000/api'
+const apiURL_heroku = 'https://sasamo-server.herokuapp.com/api'
 
 
 const path = require('path')
@@ -20,7 +20,7 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
-        }
+        },
       }
     },
 
