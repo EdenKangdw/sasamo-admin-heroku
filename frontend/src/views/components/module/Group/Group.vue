@@ -36,20 +36,20 @@
           <vs-td :data="data[indextr].grp_pastor">
             {{data[indextr].grp_pastor}}
           <template slot="edit">
-              <vs-input label="이름을 입력 후 엔터를 누르세요" v-model="tr.grp_pastor" class="inputx" :placeholder="data[indextr].grp_pastor" @blur="updateGroupPastor(tr)"/>
+              <vs-input label="이름을 입력해주세요" v-model="tr.grp_pastor" class="inputx" :placeholder="data[indextr].grp_pastor" @blur="updateGroupPastor(tr)"/>
           </template>
           </vs-td>
 
           <vs-td :data="data[indextr].grp_leader">
             {{data[indextr].grp_leader}}
              <template slot="edit">
-              <vs-input label="이름을 입력 후 엔터를 누르세요" v-model="tr.grp_leader" class="inputx" :placeholder="data[indextr].grp_leader" @blur="updateGroupLeader(tr)"/>
+              <vs-input label="이름을 입력해주세요" v-model="tr.grp_leader" class="inputx" :placeholder="data[indextr].grp_leader" @blur="updateGroupLeader(tr)"/>
           </template>
           </vs-td>
           <vs-td :data="data[indextr].grp_subldr">
             {{data[indextr].grp_subldr}}
              <template slot="edit">
-              <vs-input label="이름을 입력 후 엔터를 누르세요" v-model="tr.grp_subldr" class="inputx" :placeholder="data[indextr].grp_subldr" @blur="updateGroupSubLdr(tr)"/>
+              <vs-input label="이름을 입력해주세요" v-model="tr.grp_subldr" class="inputx" :placeholder="data[indextr].grp_subldr" @blur="updateGroupSubLdr(tr)"/>
           </template>
           </vs-td>
           <vs-td :data="data[indextr].grp_cnt">
