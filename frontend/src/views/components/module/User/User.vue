@@ -36,7 +36,7 @@
           <vs-td :data="data[indextr].ssm_name">
             {{data[indextr].ssm_name}}
             <template slot="edit">
-              <vs-input label="사역자 이름" v-model="tr.ssm_name" class="inputx" :placeholder="data[indextr].ssm_name" @keydown.enter="updateData(tr)"/>
+              <vs-input label="사역자 이름" v-model="tr.ssm_name" class="inputx" :placeholder="data[indextr].ssm_name" @blur="updateData(tr)"/>
               
             </template>
           </vs-td>
@@ -44,14 +44,14 @@
           <vs-td :data="data[indextr].ssm_team">
             {{data[indextr].ssm_team}}
             <template slot="edit">
-              <vs-input label="팀 번호" v-model="tr.ssm_team" class="inputx" placeholder="엔터를 눌러 수정하세요" @keydown.enter="updateData(tr)"/>
+              <vs-input label="팀 번호" v-model="tr.ssm_team" class="inputx" placeholder="엔터를 눌러 수정하세요" @blur="updateData(tr)"/>
             </template>
           </vs-td>
 
           <vs-td :data="data[indextr].grp_seq">
             {{data[indextr].grp_seq}}
             <template slot="edit">
-              <vs-input label="조 번호" v-model="tr.grp_seq" class="inputx" :placeholder="data[indextr].grp_seq" @keydown.enter="updateData(tr)"/>
+              <vs-input label="조 번호" v-model="tr.grp_seq" class="inputx" :placeholder="data[indextr].grp_seq" @blur="updateData(tr)"/>
             </template>
           </vs-td>
 

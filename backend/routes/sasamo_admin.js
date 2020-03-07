@@ -555,7 +555,6 @@ router.get('/group/list', (req, res) => {
     let token = req.headers['access-token'] || req.query.token
     let decoded = jwt.decode(token, secretObj.secret)
     let data = resModel()
-    const interval1s = interval(1)
     const {ssm_name} = req.body
     console.log('들어온 값 : ',ssm_name)
     
