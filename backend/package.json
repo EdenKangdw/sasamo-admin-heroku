@@ -1,11 +1,11 @@
 {
-  "name":"sasamo-admin",
+  "name": "sasamo-admin",
   "version": "0.0.0",
   "private": true,
-  "author" : "EdenKang",
+  "author": "EdenKang",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "deploy" : "git subtree push --prefix backend heroku master"
+    "deploy": "git subtree push --prefix backend heroku master"
   },
   "engines": {
     "node": "v12.13.0",
@@ -17,14 +17,14 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "interval-call": "^0.2.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "morgan": "~1.9.0",
     "mysql": "^2.17.1",
+    "nodemon": "^1.19.4",
     "pug": "2.0.0-beta11",
-    "vuex": "^3.1.1",
-    "nodemon": "^1.19.4"
+    "vuex": "^3.1.1"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

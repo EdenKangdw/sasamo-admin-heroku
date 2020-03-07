@@ -77,6 +77,12 @@ export default new Router({
                     component: () => import('../views/components/module/Group/Arrange_Group.vue')
                 },
                 {
+                    path: '/group/create',
+                    name: 'Group_Create',
+                    index: 8,
+                    component: () => import('../views/components/module/Group/Create_Group.vue')
+                },
+                {
                     path: '/event/create',
                     name: 'Event_Create',
                     index: 8,

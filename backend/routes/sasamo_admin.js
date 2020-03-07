@@ -3,9 +3,11 @@ var router = express.Router();
 var jwt = require('jsonwebtoken')
 var secretObj = require('../config/jwt')
 const moment = require('moment')
+const intervalCall = require('interval-call')
 
 var mysql_dbc = require('../model/db/db_conn')();
 var connection = mysql_dbc.init();
+
 
 const resModel = () => {
 	return {
@@ -219,8 +221,8 @@ router.post('/team/change', async (req, res) => {
     }
 })
 
-const updateUser = (ssm_seq, ssm_name, ssm_team, grp_seq) => {
-    const query = ` update ssm_member set ssm_name = '${ssm_name}', ssm_team=${ssm_team}, grp_seq=${grp_seq}
+const updateUser = (ssm_seq, ssm_name, ssm_team, grp_number) => {
+    const query = ` update ssm_member set ssm_name = '${ssm_name}', ssm_team=${ssm_team}, grp_number=${grp_number}
                     where ssm_seq=${ssm_seq}`
     connection.query(query, (err, result) => {
         if(err){
@@ -248,6 +250,50 @@ const updateUserCheck = (ssm_seq,chk_isApply, chk_isCheck) => {
     })
 
 }
+
+const updateGroupLeader = (grp_number, grp_leader) => {
+    const query = ` update ssm_group set grp_leader = ${grp_leader} where grp_number = ${grp_number}`
+    connection.query(query, (err, result) => {
+        if(err){
+            console.log(err)
+            return false
+        } else {
+            console.log("ADMIN GROUP LEADER UPDATE :", result )
+            return true
+        }
+    })
+
+}
+const updateGroupSubLdr = (grp_number, grp_subldr) => {
+    const query = ` update ssm_group set  grp_subldr=${grp_subldr} 
+                    where grp_number=${grp_number}`
+    connection.query(query, (err, result) => {
+        if(err){
+            console.log(err)
+            return false
+        } else {
+            console.log("ADMIN GROUP SUBLDR UPDATE :", result )
+            return true
+        }
+    })
+
+}
+const updateGroupPastor = (grp_number, grp_pastor) => {
+    const query = ` update ssm_group set grp_pastor=${grp_pastor}
+                    where grp_number=${grp_number}`
+    connection.query(query, (err, result) => {
+        if(err){
+            console.log(err)
+            return false
+        } else {
+            console.log("ADMIN GROUP PASTOR UPDATE :", result )
+            return true
+        }
+    })
+
+}
+
+
 // 사역자 관리 - 체크 데이터 update
 router.post('/user/update/check', async (req, res) => {
     let token = req.headers['access-token'] || req.query.token
@@ -274,10 +320,10 @@ router.post('/user/update/check', async (req, res) => {
 router.post('/user/update', async (req, res) => {
     let token = req.headers['access-token'] || req.query.token
     let decoded = jwt.decode(token, secretObj.secret)
-    const {ssm_seq, ssm_name, ssm_team, grp_seq} = req.body
+    const {ssm_seq, ssm_name, ssm_team, grp_number} = req.body
     
     if (decoded) {
-       const isUserUpdate =  await updateUser(ssm_seq, ssm_name, ssm_team, grp_seq)
+       const isUserUpdate =  await updateUser(ssm_seq, ssm_name, ssm_team, grp_number)
        let data = resModel()
        if(isUserUpdate) {
             data.success = true
@@ -355,7 +401,7 @@ router.get('/user/list', (req, res) => {
     console.log("request Token :", token)
     console.log("DECODED INFO", decoded)
     if (decoded) {
-        const query = `select a.ssm_seq, a.ssm_name, a.ssm_team, a.grp_seq, a.ssm_phone, b.chk_isApply, b.chk_isCheck 
+        const query = `select a.ssm_seq, a.ssm_name, a.ssm_team, a.grp_number, a.ssm_phone, b.chk_isApply, b.chk_isCheck 
                         from (select * from ssm_member) a, ssm_check b
                         where a.ssm_seq = b.ssm_seq;`
         connection.query(query, (err, result) => {
@@ -374,13 +420,145 @@ router.get('/user/list', (req, res) => {
     }
 
 })
+// ----------- ----------------------------------------------------GROUP START -------------------------------------------------------------------------------------
 
-router.post('/event/leader', (req, res) => {
+// 조 생성 
+router.post('/group/create', (req, res) => {
     let token = req.headers['access-token'] || req.query.token
     let decoded = jwt.decode(token, secretObj.secret)
     let data = resModel()
+    const {grp_number, grp_leader, grp_subldr, grp_pastor} = req.body
+
+    if(decoded) {
+        const query = ` insert into ssm_group(grp_number, grp_leader, grp_subldr, grp_pastor)
+                        values(${grp_number}, ${grp_leader}, ${grp_subldr}, ${grp_pastor})`
+        connection.query(query, (err, result) => {
+            if(err) {
+                data.error = err
+                data.success = false
+                console.error(err)
+                res.send(data)
+                throw err
+            } else {
+                data.success = true
+                data.data = 'insert group success'
+                res.send(data)
+            }
+        })
+    } else {
+        data.error = 'Vaild Token'
+        data.success = false
+        res.send(data)
+    }
+})
+
+
+
+// 조 정보 update 
+
+
+
+router.post('/group/update', async (req, res) => {
+    let token = req.headers['access-token'] || req.query.token
+    let decoded = jwt.decode(token, secretObj.secret)
+    let data = resModel()
+    const {grp_number, grp_ldrType, grp_ldrSeq} = req.body
+
+    if (decoded) {
+        switch (grp_ldrType) {
+            case 1 : // 조장 업데이트
+                console.log('LEADER')
+                let isLeaderUpdate = await updateGroupLeader(grp_number, grp_ldrSeq)
+                if(isLeaderUpdate) {
+                    data.success = true
+                    res.send(data)
+                    break
+                } else {
+                    data.success = false
+                    data.error = 'wrong user data'
+                    res.send(data)  
+                    break
+                }
+            case 2 : // 부조장 업데이트
+            console.log('SUB-LEADER')
+                let issubLdrUpdate = await updateGroupSubLdr(grp_number, grp_ldrSeq)
+                if(issubLdrUpdate) {
+                    data.success = true
+                    res.send(data)
+                    break
+                } else {
+                    data.success = false
+                    data.error = 'wrong user data'
+                    res.send(data)  
+                    break
+                }
+            case 3 : // 목회자 업데이트 
+                console.log('PASTOR')
+                let isPastorUpdate = await updateGroupPastor(grp_number, grp_ldrSeq)
+                if(isPastorUpdate) {
+                    data.success = true
+                    res.send(data)
+                    break
+                } else {
+                    data.success = false
+                    data.error = 'wrong user data'
+                    res.send(data)  
+                    break
+                }
+        }
+
+    } else {
+        data.error = 'Vaild Token'
+        data.success = false
+        res.send(data)
+    }
+
+
+})
+
+// 조 리스트 조회 
+
+router.get('/group/list', (req, res) => {
+    let token = req.headers['access-token'] || req.query.token
+    let decoded = jwt.decode(token, secretObj.secret)
+    let data = resModel()
+    console.log('grp list start')
+
+    if(decoded) {
+        const query = ` select * from view_group_list `
+        console.log('dslkhflksf')
+        connection.query(query, (err, result) => {
+            if(err) {
+                data.success = false
+                data.error = err
+                res.send(data)
+                console.log(err)
+                throw err
+            } else {
+                console.log(result[0])
+                data.success = true
+                data.data = result
+                res.send(data)
+            }
+        })
+    } else {
+        data.error = 'Vaild Token'
+        data.success = false
+        res.send(data)
+    }
+    
+})
+
+// --------------------------------------------------------------GROUP END -------------------------------------------------------------------------------------
+
+    router.post('/event/leader', (req, res) => {
+    let token = req.headers['access-token'] || req.query.token
+    let decoded = jwt.decode(token, secretObj.secret)
+    let data = resModel()
+    const interval1s = interval(1)
     const {ssm_name} = req.body
-    console.log(ssm_name)
+    console.log('들어온 값 : ',ssm_name)
+    
     
     if(decoded) {
         const query = `select ssm_seq, ssm_phone from ssm_member where ssm_name = '${ssm_name}'`
@@ -411,6 +589,8 @@ router.post('/event/leader', (req, res) => {
     }
 
 })
+    
+
 
 router.post('/event/create', async (req, res) => {
     let token = req.headers['access-token'] || req.query.token

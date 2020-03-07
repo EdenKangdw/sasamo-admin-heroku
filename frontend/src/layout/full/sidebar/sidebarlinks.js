@@ -49,6 +49,27 @@
 		],
 	},
 	{
+		group : "조 관리",
+		item : [
+			{
+				url: "/group",
+				name: "조 목록",
+				icon:"event"
+			},
+			{
+				url: "/group/create",
+				name: "조 생성",
+				icon:"event"
+			},
+			{
+				url: "/group/arrange",
+				name: "조 배정",
+				icon:"event"
+			},
+
+		],
+	},
+	{
 		group : "계수 관리(나중에 업데이트 예정)",
 		item : [
 			{
