@@ -173,7 +173,7 @@ data:()=>({
     users:[],
     color: '#e95ea2',
     tm_number: '',
-    selectedColor : ['#1A8CFF', '#e95ea2', 'success', 'danger', 'warning', 'dark', '#B035E9'],
+    selectedColor : ['#1A8CFF', '#e95ea2', 'success', 'danger', 'warning', '#FE8214', '#B035E9'],
     
     
   })
