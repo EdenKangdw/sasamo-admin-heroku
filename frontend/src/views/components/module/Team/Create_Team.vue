@@ -38,8 +38,6 @@
     display contents
   .button-form
     width 40%
-  .con-vs-checkbox
-    margin-top 20px
 </style>
 
 <script>

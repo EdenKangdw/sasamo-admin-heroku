@@ -49,9 +49,9 @@
           </vs-td>
 
           <vs-td :data="data[indextr].grp_seq">
-            {{data[indextr].grp_seq}}
+            {{data[indextr].grp_number}}
             <template slot="edit">
-              <vs-input label="조 번호" v-model="tr.grp_seq" class="inputx" :placeholder="data[indextr].grp_seq" @blur="updateData(tr)"/>
+              <vs-input label="조 번호" v-model="tr.grp_number" class="inputx" :placeholder="data[indextr].grp_number" @blur="updateData(tr)"/>
             </template>
           </vs-td>
 
@@ -164,13 +164,13 @@ methods:{
       }
     }
 
-     console.log(this, 'uopdate')
+     console.log(this, 'update')
      if( confirm('입력하신 정보로 수정하시겠습니까?') ){
        this.$http.post('/api/admin/user/update',  {
          ssm_seq : tr.ssm_seq,
          ssm_name : tr.ssm_name,
          ssm_team : tr.ssm_team,
-         grp_seq : tr.grp_seq,
+         grp_number : tr.grp_number,
          chk_isApply : tr.chk_isApply,
          chk_isCheck : tr.chk_isCheck
        }, config)

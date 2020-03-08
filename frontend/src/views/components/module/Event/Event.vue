@@ -17,9 +17,11 @@
 
     >
       <template slot="header">
+        
         <h2>
           이벤트 관리
         </h2>
+        
       </template>
       <template slot="thead">
         <vs-th :sort-key="evt_name">이름</vs-th>
@@ -46,7 +48,11 @@
           </vs-td>
 
           <vs-td :data="data[indextr].evt_today">
-            {{  data[indextr].evt_today }} 
+            <vs-switch color="success" v-model="tr.evt_today" @change="updateCheck(tr)">
+              
+              <span v-if="tr.evt_today == 'y' || tr.evt_today" slot="on">이번주</span>
+              <span v-else slot="off">X</span>
+            </vs-switch>
               
           </vs-td>
 

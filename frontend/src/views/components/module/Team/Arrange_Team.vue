@@ -39,8 +39,8 @@
             {{data[indextr].ssm_team}}
           </vs-td>
 
-          <vs-td :data="data[indextr].grp_seq">
-            {{data[indextr].grp_seq}}
+          <vs-td :data="data[indextr].grp_number">
+            {{data[indextr].grp_number}}
           </vs-td>
         </vs-tr>
         
@@ -71,14 +71,14 @@
   </div>
     </div>
 </template>
-<style lang="stylus" scoped> 
+<style lang="stylus"> 
 
-.vs-checkbox-primary input:checked+.vs-checkbox
+.vs-checkbox-primary input:checked+.vs-checkbox 
     background #e95ea2 !important
     border 2px solid #e95ea2 !important
 .vs-table-primary .is-selected
-  color #e95ea2
-  box-shadow 0 0 1px 0 #e95ea2 
+  color #e95ea2 !important
+  box-shadow 0 0 1px 0 #e95ea2 !important
 .vs-pagination-primary .effect, .vs-pagination-primary .vs-pagination--buttons:hover
   background #e95ea2 !important
 .vs-description-primary
@@ -173,7 +173,7 @@ data:()=>({
     users:[],
     color: '#e95ea2',
     tm_number: '',
-    selectedColor : ['primary', '#e95ea2', 'success', 'danger', 'warning', 'dark', '#B035E9'],
+    selectedColor : ['#1A8CFF', '#e95ea2', 'success', 'danger', 'warning', 'dark', '#B035E9'],
     
     
   })
